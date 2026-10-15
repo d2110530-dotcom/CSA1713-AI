@@ -1,0 +1,36 @@
+from collections import deque
+
+def solve():
+    start = (3, 3, 1)
+    goal = (0, 0, 0)
+    q = deque([(start, [])])
+    visited = set()
+
+    moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+
+    while q:
+        state, path = q.popleft()
+        m, c, b = state
+
+        if state == goal:
+            for step in path + [state]:
+                print(step)
+            return
+
+        if state in visited:
+            continue
+        visited.add(state)
+
+        for x, y in moves:
+            if b == 1:
+                new = (m-x, c-y, 0)
+            else:
+                new = (m+x, c+y, 1)
+
+            M, C, B = new
+
+            if 0 <= M <= 3 and 0 <= C <= 3:
+                if (M == 0 or M >= C) and (3-M == 0 or 3-M >= 3-C):
+                    q.append((new, path + [state]))
+
+solve()
