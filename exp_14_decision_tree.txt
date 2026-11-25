@@ -1,0 +1,41 @@
+
+from sklearn.tree import DecisionTreeClassifier
+
+# Training data: [Weather, Temperature]
+# Weather: 0 = Sunny, 1 = Cloudy, 2 = Rainy
+# Temperature: 0 = Cool, 1 = Hot
+X = [
+    [0, 1],
+    [0, 0],
+    [1, 1],
+    [1, 0],
+    [2, 1],
+    [2, 0]
+]
+
+# 0 = Do not play, 1 = Play
+y = [0, 0, 1, 1, 0, 0]
+
+# Create and train the Decision Tree
+model = DecisionTreeClassifier(random_state=0)
+model.fit(X, y)
+
+# Get input from the user
+weather = input("Enter weather (sunny/cloudy/rainy): ").lower()
+temperature = input("Enter temperature (hot/cool): ").lower()
+
+weather_values = {"sunny": 0, "cloudy": 1, "rainy": 2}
+temperature_values = {"cool": 0, "hot": 1}
+
+if weather not in weather_values or temperature not in temperature_values:
+    print("Invalid input!")
+else:
+    prediction = model.predict([[
+        weather_values[weather],
+        temperature_values[temperature]
+    ]])
+
+    if prediction[0] == 1:
+        print("Decision: Play")
+    else:
+        print("Decision: Do not Play")
